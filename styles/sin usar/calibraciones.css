@@ -1,0 +1,371 @@
+/* Estilos específicos para la página de calibraciones */
+
+/* Calibraciones Main Section */
+.calibraciones-main {
+    padding: 80px 0;
+    background-color: #f8f9fa;
+}
+
+.calibraciones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 50px;
+    margin-top: 50px;
+}
+
+.calibracion-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.calibracion-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+}
+
+.calibracion-image {
+    height: 250px;
+    overflow: hidden;
+}
+
+.calibracion-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.calibracion-card:hover .calibracion-image img {
+    transform: scale(1.05);
+}
+
+.calibracion-content {
+    padding: 40px;
+}
+
+.calibracion-content h3 {
+    font-size: 28px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.calibracion-content p {
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 25px;
+    font-size: 16px;
+}
+
+.calibracion-features {
+    list-style: none;
+    margin-bottom: 30px;
+}
+
+.calibracion-features li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    color: #555;
+    font-size: 15px;
+}
+
+.calibracion-features i {
+    color: #27ae60;
+    font-size: 14px;
+}
+
+.calibracion-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.calibracion-price {
+    font-size: 18px;
+    font-weight: 600;
+    color: #27ae60;
+}
+
+/* Proceso de Calibración */
+.proceso-calibracion {
+    padding: 80px 0;
+    background-color: white;
+}
+
+.proceso-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.proceso-step {
+    text-align: center;
+    padding: 30px;
+    border-radius: 15px;
+    background: #f8f9fa;
+    transition: transform 0.3s ease;
+}
+
+.proceso-step:hover {
+    transform: translateY(-5px);
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 auto 20px;
+}
+
+.step-content h3 {
+    font-size: 20px;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.step-content p {
+    color: #555;
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+/* Efectos especiales para las tarjetas */
+.calibracion-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.calibracion-card {
+    position: relative;
+}
+
+.calibracion-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* Animaciones para los elementos */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.calibracion-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.calibracion-card:nth-child(1) { animation-delay: 0.1s; }
+.calibracion-card:nth-child(2) { animation-delay: 0.2s; }
+.calibracion-card:nth-child(3) { animation-delay: 0.3s; }
+.calibracion-card:nth-child(4) { animation-delay: 0.4s; }
+.calibracion-card:nth-child(5) { animation-delay: 0.5s; }
+.calibracion-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* Responsive específico para calibraciones */
+@media (max-width: 768px) {
+    .calibraciones-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .calibracion-content {
+        padding: 30px 20px;
+    }
+    
+    .calibracion-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .btn-mercadolibre {
+        justify-content: center;
+    }
+    
+    .proceso-steps {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .proceso-step {
+        padding: 25px 20px;
+    }
+    
+    .calibracion-content h3 {
+        font-size: 24px;
+    }
+    
+    .calibracion-features li {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .calibraciones-main,
+    .proceso-calibracion {
+        padding: 50px 0;
+    }
+    
+    .calibracion-content {
+        padding: 25px 15px;
+    }
+    
+    .calibracion-content h3 {
+        font-size: 22px;
+    }
+    
+    .calibracion-content p {
+        font-size: 15px;
+    }
+    
+    .calibracion-price {
+        font-size: 16px;
+    }
+    
+    .step-number {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+    
+    .step-content h3 {
+        font-size: 18px;
+    }
+    
+    .step-content p {
+        font-size: 14px;
+    }
+}
+
+/* Estilos para mejorar la accesibilidad */
+.calibracion-card:focus-within {
+    outline: 3px solid #3498db;
+    outline-offset: 2px;
+}
+
+.btn-mercadolibre:focus {
+    outline: 3px solid #333;
+    outline-offset: 2px;
+}
+
+/* Efectos adicionales para la interacción */
+.calibracion-card {
+    cursor: pointer;
+}
+
+.calibracion-card:active {
+    transform: translateY(-5px);
+}
+
+/* Estilos para el estado de loading de los botones */
+.btn-mercadolibre.loading {
+    position: relative;
+    color: transparent;
+}
+
+.btn-mercadolibre.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-left: -10px;
+    margin-top: -10px;
+    border: 2px solid #333;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Mejoras visuales adicionales */
+.calibracion-features li:hover {
+    color: #2c3e50;
+    transform: translateX(5px);
+    transition: all 0.3s ease;
+}
+
+.proceso-step:nth-child(odd) {
+    background: linear-gradient(135deg, #f8f9fa, #ecf0f1);
+}
+
+.proceso-step:nth-child(even) {
+    background: linear-gradient(135deg, #ecf0f1, #f8f9fa);
+}
+
+/* Tooltip para precios */
+.calibracion-price {
+    position: relative;
+    cursor: help;
+}
+
+.calibracion-price::after {
+    content: 'Precio orientativo. Consulte por cotización exacta.';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2c3e50;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: normal;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.calibracion-price::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #2c3e50;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.calibracion-price:hover::after,
+.calibracion-price:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
