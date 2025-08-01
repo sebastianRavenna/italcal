@@ -23,13 +23,6 @@ function changeSlide(direction) {
     indicators[currentSlideIndex].classList.add('active');
 }
 
-
-// Función para ir a un slide específico (compatibilidad con HTML onclick)
-function goToSlideByIndicator(slideIndex) {
-    goToSlide(slideIndex - 1);
-}
-
-
 // Función para ir a un slide específico
 function goToSlide(slideIndex) {
     if (slides.length === 0 || slideIndex < 0 || slideIndex >= slides.length) return;
@@ -43,36 +36,50 @@ function goToSlide(slideIndex) {
     indicators[currentSlideIndex].classList.add('active');
 }
 
+// Función para ir a un slide específico (compatibilidad con HTML onclick)
+function goToSlideByIndicator(slideIndex) {
+    goToSlide(slideIndex - 1);
+}
+
 // Inicialización cuando se carga la página
 document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar elementos DOM
+    console.log("DOM completamente cargado");
+    
+    // Inicializar elementos DOM del carousel solo si existen
     slides = document.querySelectorAll('.carousel-slide');
     indicators = document.querySelectorAll('.indicator');
     
-    // Verificar que existan los elementos
-    if (slides.length === 0 || indicators.length === 0) {
-        console.log('Elementos del carousel no encontrados');
-        return;
+    // Solo inicializar carousel si los elementos existen
+    if (slides.length > 0 && indicators.length > 0) {
+        console.log('Elementos del carousel encontrados, inicializando...');
+        initializeCarousel();
+    } else {
+        console.log('Elementos del carousel no encontrados - Saltando inicialización del carousel');
     }
     
-    // Inicializar carousel
-    initializeCarousel();
-    
+    // Estas funciones pueden ejecutarse en cualquier página
     // Inicializar menú móvil
     initializeMobileMenu();
-    
+
     // Inicializar formulario de contacto
     initializeContactForm();
-    
+
     // Inicializar scroll suave
     initializeSmoothScroll();
-    
+
     // Inicializar navegación activa
     initializeActiveNavigation();
     
-    // Inicializar animaciones
+    // Inicializar navegación fija
+    initializeFixedNavigation();
+    
+    // Inicializar botón flotante de WhatsApp
+    initializeWhatsAppButton();
+    
+    // Inicializar animaciones con delay
     setTimeout(animateOnScroll, 100);
 });
+
 
 // Función para inicializar el carousel
 function initializeCarousel() {
@@ -111,6 +118,16 @@ function initializeCarousel() {
             stopAutoSlide();
             goToSlide(index);
             startAutoSlide();
+        });
+        
+        // Soporte para navegación por teclado
+        indicator.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                stopAutoSlide();
+                goToSlide(index);
+                startAutoSlide();
+            }
         });
     });
     
@@ -179,39 +196,44 @@ function initializeContactForm() {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Obtener datos del formulario
-            const formData = new FormData(contactForm);
-            const data = {};
-            
-            for (let [key, value] of formData.entries()) {
-                data[key] = value;
-            }
+            // Obtener valores del formulario usando IDs específicos
+            const nombre = document.getElementById('nombre')?.value || '';
+            const email = document.getElementById('email')?.value || '';
+            const telefono = document.getElementById('telefono')?.value || '';
+            const empresa = document.getElementById('empresa')?.value || '';
+            const asunto = document.getElementById('asunto')?.value || '';
+            const mensaje = document.getElementById('mensaje')?.value || '';
             
             // Validar campos requeridos
-            if (!data.nombre || !data.email || !data.mensaje || !data.asunto) {
+            if (!nombre || !email || !mensaje || !asunto) {
                 showAlert('Por favor, complete todos los campos obligatorios.', 'error');
                 return;
             }
             
             // Validar email
-            if (!isValidEmail(data.email)) {
+            if (!isValidEmail(email)) {
                 showAlert('Por favor, ingrese un correo electrónico válido.', 'error');
                 return;
             }
             
             // Simular envío del formulario
-            const submitButton = contactForm.querySelector('.btn-submit');
-            const originalText = submitButton.textContent;
+            const submitButton = contactForm.querySelector('.btn-submit') || contactForm.querySelector('button[type="submit"]');
+            const originalText = submitButton ? submitButton.textContent : '';
             
-            submitButton.textContent = 'Enviando...';
-            submitButton.disabled = true;
+            if (submitButton) {
+                submitButton.textContent = 'Enviando...';
+                submitButton.disabled = true;
+            }
             
             // Simular delay de envío
             setTimeout(function() {
                 showAlert('¡Mensaje enviado correctamente! Nos pondremos en contacto contigo pronto.', 'success');
                 contactForm.reset();
-                submitButton.textContent = originalText;
-                submitButton.disabled = false;
+                
+                if (submitButton) {
+                    submitButton.textContent = originalText;
+                    submitButton.disabled = false;
+                }
             }, 2000);
         });
     }
@@ -297,7 +319,9 @@ function initializeSmoothScroll() {
             const targetElement = document.querySelector(targetId);
             
             if (targetElement) {
-                const offsetTop = targetElement.offsetTop - 80; // Ajustar por header fijo
+                const navbar = document.querySelector('.navbar');
+                const navbarHeight = navbar ? navbar.offsetHeight : 0;
+                const offsetTop = targetElement.offsetTop - navbarHeight - 20;
                 
                 window.scrollTo({
                     top: offsetTop,
@@ -312,7 +336,20 @@ function initializeSmoothScroll() {
 function initializeActiveNavigation() {
     const navLinks = document.querySelectorAll('.nav-link');
     
-    window.addEventListener('scroll', function() {
+    // Función de debounce para mejorar performance
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+    
+    const handleScroll = debounce(function() {
         let current = '';
         const sections = document.querySelectorAll('section[id]');
         
@@ -336,8 +373,92 @@ function initializeActiveNavigation() {
                 link.classList.add('active');
             }
         });
-    });
+    }, 100);
+    
+    window.addEventListener('scroll', handleScroll);
 }
+
+// Función para inicializar navegación fija
+function initializeFixedNavigation() {
+    const navbar = document.querySelector('.navbar');
+    const header = document.querySelector('.header');
+    
+    if (!navbar || !header) return;
+    
+    function handleFixedNav() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const isMobile = window.innerWidth <= 1024; // Considerar tablets también
+        
+        // En dispositivos móviles, el header es más pequeño
+        const headerHeight = isMobile ? header.offsetHeight * 0.8 : header.offsetHeight;
+        
+        const headerScrolled = Math.min(scrollTop, headerHeight);
+        
+        if (scrollTop >= headerHeight) {
+            navbar.classList.add('fixed-nav');
+            document.body.classList.add('nav-fixed');
+        } else {
+            navbar.classList.remove('fixed-nav');
+            document.body.classList.remove('nav-fixed');
+            navbar.style.transform = `translateY(-${headerScrolled}px)`;
+        }
+    }
+    
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+    
+    const debouncedHandleFixedNav = debounce(handleFixedNav, 10);
+    
+    window.addEventListener('scroll', debouncedHandleFixedNav);
+    window.addEventListener('resize', debouncedHandleFixedNav);
+    
+    // Llamar una vez al cargar para establecer el estado inicial
+    handleFixedNav();
+}
+
+// Función para inicializar el botón flotante de WhatsApp
+function initializeWhatsAppButton() {
+    // Función para ajustar la posición del botón de WhatsApp
+    function adjustWhatsAppButton() {
+        const whatsappButton = document.querySelector('.whatsapp-float');
+        const footer = document.querySelector('.footer');
+        
+        if (!whatsappButton || !footer) return;
+        
+        const footerRect = footer.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        const buttonHeight = 60; // Altura del botón
+        const minMargin = 20; // Margen mínimo
+        
+        // Si el footer está visible en la pantalla
+        if (footerRect.top < windowHeight) {
+            const newBottom = windowHeight - footerRect.top + minMargin;
+            whatsappButton.style.bottom = newBottom + 'px';
+        } else {
+            whatsappButton.style.bottom = '20px';
+        }
+    }
+    
+    // Ejecutar al cargar la página y al hacer scroll
+    window.addEventListener('load', adjustWhatsAppButton);
+    window.addEventListener('scroll', adjustWhatsAppButton);
+    window.addEventListener('resize', adjustWhatsAppButton);
+    
+    // Ejecutar inmediatamente si ya está cargado
+    adjustWhatsAppButton();
+}
+
+// Función para ajustar el carousel según el tamaño de pantalla
+
 
 // Función para animar elementos cuando entran en viewport
 function animateOnScroll() {
