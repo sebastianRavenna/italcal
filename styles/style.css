@@ -70,11 +70,18 @@ body {
 .contact-item i {
     color: #3498db;
     font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
 }
 
 .fa-whatsapp {
-    font-weight:bolder !important;
-    font-size: 24px !important;
+    font-weight: bolder !important;
+    font-size: 20px !important;
+    width: 20px !important;
+    height: 20px !important;
 }
 
 /* ===============================
@@ -640,14 +647,9 @@ body.nav-fixed {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    justify-content: right;
     flex-wrap: wrap;
     gap: 15px;
-}
-
-.service-price {
-    font-size: 18px;
-    font-weight: 600;
-    color: #27ae60;
 }
 
 /* ===============================
@@ -741,6 +743,7 @@ body.nav-fixed {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    justify-content: right;
     flex-wrap: wrap;
     gap: 15px;
 }
@@ -851,16 +854,9 @@ body.nav-fixed {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    justify-content: right;
     flex-wrap: wrap;
     gap: 15px;
-}
-
-.calibracion-price {
-    font-size: 18px;
-    font-weight: 600;
-    color: #27ae60;
-    position: relative;
-    cursor: help;
 }
 
 /* ===============================
@@ -964,8 +960,12 @@ body.nav-fixed {
 
 .contact-info .contact-item i {
     color: #3498db;
-    font-size: 20px;
-    margin-top: 5px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
 }
 
 .contact-info .contact-item strong {
@@ -1042,13 +1042,14 @@ body.nav-fixed {
     align-items: center;
     gap: 8px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 241, 89, 0.3);
+    box-shadow: 0 4px 15px rgba(54, 51, 10, 0.3);
     font-size: 14px;
 }
 
 .btn-mercadolibre:hover {
+    color: black;
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 241, 89, 0.4);
+    box-shadow: 0 8px 25px rgba(54, 51, 10, 0.6);
 }
 
 .btn-mercadolibre:focus {
@@ -1151,7 +1152,7 @@ body.nav-fixed {
 .whatsapp-float {
     position: fixed;
     bottom: 20px;
-    left: calc(50% + 620px);
+    left: calc(90%);
     width: 60px;
     height: 60px;
     background-color: #25d366;
@@ -1325,48 +1326,6 @@ body.nav-fixed {
     to {
         transform: rotate(360deg);
     }
-}
-
-
-/* ===============================
-  TOOLTIP PARA PRECIOS - CALIBRACIONES
-  =============================== */
-.calibracion-price::after {
-   content: 'Precio orientativo. Consulte por cotización exacta.';
-   position: absolute;
-   bottom: 100%;
-   left: 50%;
-   transform: translateX(-50%);
-   background: #2c3e50;
-   color: white;
-   padding: 8px 12px;
-   border-radius: 6px;
-   font-size: 12px;
-   font-weight: normal;
-   white-space: nowrap;
-   opacity: 0;
-   visibility: hidden;
-   transition: all 0.3s ease;
-   z-index: 1000;
-}
-
-.calibracion-price::before {
-   content: '';
-   position: absolute;
-   bottom: 100%;
-   left: 50%;
-   transform: translateX(-50%);
-   border: 5px solid transparent;
-   border-top-color: #2c3e50;
-   opacity: 0;
-   visibility: hidden;
-   transition: all 0.3s ease;
-}
-
-.calibracion-price:hover::after,
-.calibracion-price:hover::before {
-   opacity: 1;
-   visibility: visible;
 }
 
 /* ===============================
@@ -1686,10 +1645,6 @@ body.nav-fixed {
        font-size: 15px;
    }
    
-   .equipo-price {
-       font-size: 16px;
-   }
-   
    /* CALIBRACIONES MOBILE - PÁGINA CALIBRACIONES */
    .calibraciones-main,
    .proceso-calibracion {
@@ -1706,10 +1661,6 @@ body.nav-fixed {
    
    .calibracion-content p {
        font-size: 15px;
-   }
-   
-   .calibracion-price {
-       font-size: 16px;
    }
    
    .step-number {
@@ -1744,10 +1695,6 @@ body.nav-fixed {
        font-size: 15px;
    }
    
-   .service-price {
-       font-size: 16px;
-   }
-   
    /* CTA SECTION MOBILE - EQUIPAMIENTO Y SERVICIOS */
    .cta-content h2 {
        font-size: 24px;
@@ -1774,12 +1721,12 @@ body.nav-fixed {
        font-size: 16px;
    }
    
-   /* WHATSAPP BUTTON MOBILE */
+   /* WHATSAPP BUTTON MOBILE*/ 
    .whatsapp-float {
        width: 55px;
        height: 55px;
        font-size: 26px;
        bottom: 15px;
-       right: 15px;
+       left: calc(80%);
    }
 }

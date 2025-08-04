@@ -205,7 +205,7 @@ function initializeContactForm() {
             const mensaje = document.getElementById('mensaje')?.value || '';
             
             // Validar campos requeridos
-            if (!nombre || !email || !mensaje || !asunto) {
+            if (!nombre || !email || !telefono || !mensaje || !asunto) {
                 showAlert('Por favor, complete todos los campos obligatorios.', 'error');
                 return;
             }
@@ -216,25 +216,32 @@ function initializeContactForm() {
                 return;
             }
             
-            // Simular envío del formulario
-            const submitButton = contactForm.querySelector('.btn-submit') || contactForm.querySelector('button[type="submit"]');
-            const originalText = submitButton ? submitButton.textContent : '';
-            
-            if (submitButton) {
-                submitButton.textContent = 'Enviando...';
-                submitButton.disabled = true;
-            }
-            
-            // Simular delay de envío
-            setTimeout(function() {
-                showAlert('¡Mensaje enviado correctamente! Nos pondremos en contacto contigo pronto.', 'success');
-                contactForm.reset();
-                
+           // Envío real del formulario
+            const formData = new FormData(contactForm);
+
+            fetch('process_form.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showAlert(data.message, 'success');
+                    contactForm.reset();
+                } else {
+                    showAlert(data.message, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showAlert('Error de conexión. Por favor, inténtelo nuevamente.', 'error');
+            })
+            .finally(() => {
                 if (submitButton) {
                     submitButton.textContent = originalText;
                     submitButton.disabled = false;
                 }
-            }, 2000);
+            });
         });
     }
 }

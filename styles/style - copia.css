@@ -70,11 +70,18 @@ body {
 .contact-item i {
     color: #3498db;
     font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
 }
 
 .fa-whatsapp {
-    font-weight:bolder !important;
-    font-size: 24px !important;
+    font-weight: bolder !important;
+    font-size: 20px !important;
+    width: 20px !important;
+    height: 20px !important;
 }
 
 /* ===============================
@@ -964,8 +971,12 @@ body.nav-fixed {
 
 .contact-info .contact-item i {
     color: #3498db;
-    font-size: 20px;
-    margin-top: 5px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
 }
 
 .contact-info .contact-item strong {
@@ -1375,10 +1386,13 @@ body.nav-fixed {
 @media (max-width: 768px) {
    /* HEADER RESPONSIVE - TODAS LAS PÁGINAS */
    .header-content {
-       flex-direction: column;
-       gap: 20px;
+       justify-content: center;
    }
    
+   .contact-info {
+        display: none;
+    }
+
    .mobile-menu-toggle {
        display: block;
    }
@@ -1398,6 +1412,11 @@ body.nav-fixed {
    }
    
    /* HERO SECTION RESPONSIVE - TODAS LAS PÁGINAS */
+   
+   .hero-section {
+       height: 450px; /* Reducir altura en tablets */
+   }
+
    .hero-text h1 {
        font-size: 36px;
    }
@@ -1411,17 +1430,36 @@ body.nav-fixed {
    }
    
    /* CAROUSEL RESPONSIVE - PÁGINA INDEX */
-   .carousel-content {
-       padding: 40px 20px 20px;
-   }
    
-   .carousel-content h2 {
-       font-size: 28px;
-   }
    
-   .carousel-content p {
-       font-size: 16px;
-   }
+   
+    .carousel-section {
+        height: 400px; /* Reducir altura en tablets */
+    }
+    
+    .carousel-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* Cambiar de cover a contain para mostrar imagen completa */
+        background-color: #f8f9fa; /* Fondo para areas vacías */
+        margin-top: -50px; /* Ajustar margen para centrar imagen */
+    }
+    
+    .carousel-content {
+        padding: 30px 20px 20px;
+        background: linear-gradient(transparent, rgba(0,0,0,0.9)); /* Más opacidad */
+    }
+    
+    .carousel-content h2 {
+        font-size: 24px;
+        margin-bottom: 5px;
+    }
+    
+    .carousel-content p {
+        font-size: 18px;
+        margin-bottom: 20px;
+        line-height: 1.4;
+    }
    
    .carousel-btn {
        width: 40px;
@@ -1442,6 +1480,12 @@ body.nav-fixed {
    .about-text p {
        font-size: 15px;
    }
+
+   .about-image img {
+        width: 100%;
+        height: 500px; /* Altura fija más pequeña para tablets */
+        object-fit: cover;
+    }
    
    /* SERVICES PREVIEW RESPONSIVE - PÁGINA INDEX */
    .services-grid {
@@ -1569,18 +1613,33 @@ body.nav-fixed {
    }
    
    /* CAROUSEL MOBILE - PÁGINA INDEX */
-   .carousel-content {
-       padding: 30px 15px 15px;
-   }
-   
-   .carousel-content h2 {
-       font-size: 24px;
-   }
-   
-   .carousel-content p {
-       font-size: 14px;
-   }
-   
+   .carousel-section {
+        height: 200px; /* Altura aún más pequeña en móviles */
+    }
+    
+    .carousel-slide img {
+        object-fit: contain; /* Mantener imagen completa */
+        margin-top: -20px; /* Ajustar margen para centrar imagen */
+    }
+    
+    .carousel-content {
+        padding: 20px 15px 15px;
+    }
+    
+    .carousel-content h2 {
+        font-size: 18px;
+        margin-bottom: 25px;
+        line-height: 1.2;
+    }
+    
+    .carousel-content p {
+        font-size: 12px;
+        line-height: 1.3;
+        margin: 0;
+        /* Opción: ocultar texto completamente en móviles si es necesario */
+        display: none;
+    }
+
    .carousel-btn {
        width: 35px;
        height: 35px;
@@ -1595,6 +1654,11 @@ body.nav-fixed {
    .about-text p {
        font-size: 14px;
    }
+
+   .about-image img {
+        height: 250px; /* Altura más pequeña para móviles */
+        object-fit: cover;
+    }
    
    /* SERVICES PREVIEW MOBILE - PÁGINA INDEX */
    .services-grid {
